@@ -1,18 +1,16 @@
-package br.com.zup.treino_mercado_ivre.opiniao;
+package br.com.zup.treino_mercado_ivre.produto.opiniao;
 
 import br.com.zup.treino_mercado_ivre.produto.Produto;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 public class NovaOpiniaoRequest {
     @NotBlank
     private String titulo;
 
     @NotBlank
+    @Size(max = 500)
     private String descricao;
 
     @NotNull
@@ -20,7 +18,7 @@ public class NovaOpiniaoRequest {
     @Max(5)
     private Integer nota;
 
-    public NovaOpiniaoRequest(@NotBlank String titulo, @NotBlank String descricao, @NotNull @Min(1) @Max(5) Integer nota) {
+    public NovaOpiniaoRequest(@NotBlank String titulo,@Size(max = 500) @NotBlank String descricao, @NotNull @Min(1) @Max(5) Integer nota) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.nota = nota;

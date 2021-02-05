@@ -1,4 +1,4 @@
-package br.com.zup.treino_mercado_ivre.opiniao;
+package br.com.zup.treino_mercado_ivre.produto.opiniao;
 
 import br.com.zup.treino_mercado_ivre.produto.Produto;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
@@ -44,7 +44,8 @@ public class Opiniao {
     private Produto produto;
 
     public Opiniao(@NotBlank String titulo, @NotBlank String descricao, @NotNull @Min(1) @Max(5) Integer nota, @NotNull @Valid Usuario usuario, @NotNull @Valid Produto produto) {
-        Assert.isTrue(nota>=1 || nota<=5,"Nota deve ser entre 1 e 5");
+        Assert.isTrue(nota>=1,"Nota deve ser entre 1 e 5");
+        Assert.isTrue(nota<=5,"Nota deve ser entre 1 e 5!");
         Assert.isTrue(titulo!=null,"Título não pode ser nulo");
         Assert.isTrue(descricao!=null,"Descrição não pode ser nulo");
         Assert.notNull(usuario,"O usuário não pode ser nulo!");
@@ -57,6 +58,11 @@ public class Opiniao {
         this.produto = produto;
 
         Assert.isTrue(!produto.produtoPertenceUsuario(usuario),"O usuário dono do produto não pode opinar sobre o mesmo!");
+    }
+
+    @Deprecated
+    public Opiniao(){
+
     }
 
     public Long getId() {
@@ -83,15 +89,4 @@ public class Opiniao {
         return produto;
     }
 
-    @Override
-    public String toString() {
-        return "Opiniao{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", nota=" + nota +
-                ", usuario=" + usuario +
-                ", produto=" + produto +
-                '}';
-    }
 }

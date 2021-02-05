@@ -1,14 +1,11 @@
 package br.com.zup.treino_mercado_ivre.produto;
 
 import br.com.zup.treino_mercado_ivre.categoria.Categoria;
-import br.com.zup.treino_mercado_ivre.opiniao.Opiniao;
 import br.com.zup.treino_mercado_ivre.produto.caracteristica.Caracteristica;
 import br.com.zup.treino_mercado_ivre.produto.caracteristica.NovaCaracteristicaRequest;
 import br.com.zup.treino_mercado_ivre.produto.imagens.ImagemProduto;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

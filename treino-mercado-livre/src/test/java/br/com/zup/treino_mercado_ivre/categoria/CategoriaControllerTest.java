@@ -45,7 +45,7 @@ class CategoriaControllerTest {
     @WithMockUser(username = "ADMIN")
     void deveCriarUmaCategoriaComNomeUnico() throws Exception{
         NovaCategoriaRequest request = new  NovaCategoriaRequest("Teste",null);
-        System.out.println(jsonMapper.writeValueAsString(request));
+
         mockMvc.perform(post("/api/categorias")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonMapper.writeValueAsString(request)))

@@ -2,9 +2,11 @@ package br.com.zup.treino_mercado_ivre.produto;
 
 import br.com.zup.treino_mercado_ivre.categoria.Categoria;
 import br.com.zup.treino_mercado_ivre.categoria.CategoriaRepository;
+import br.com.zup.treino_mercado_ivre.produto.opiniao.NovaOpiniaoRequest;
+import br.com.zup.treino_mercado_ivre.produto.opiniao.Opiniao;
+import br.com.zup.treino_mercado_ivre.produto.opiniao.OpiniaoRepository;
 import br.com.zup.treino_mercado_ivre.produto.imagens.NovasImagensRequest;
 import br.com.zup.treino_mercado_ivre.produto.imagens.Uploader;
-import br.com.zup.treino_mercado_ivre.produto.imagens.UploaderFake;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 import br.com.zup.treino_mercado_ivre.validators.ProibeCaracteristicasComNomesIguaisValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class ProdutoController {
     private CategoriaRepository categoriaRepository;
     @Autowired
     private Uploader uploaderFake;
+    @Autowired
+    private OpiniaoRepository opiniaoRepository;
 
     @InitBinder(value = "novoProdutoRequest")
     public void init(WebDataBinder binder){
@@ -60,8 +64,8 @@ public class ProdutoController {
         if (produto.isEmpty()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Produto não encontrado!");
         }
-        if(produto.get().produtoPertenceUsuario(usuario)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Produto não pertence ao usuário!");
+        if(!produto.get().produtoPertenceUsuario(usuario)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Produto não pertence ao usuário!");
         }
 
 
@@ -69,6 +73,24 @@ public class ProdutoController {
         produto.get().setImagens(links);
 
         produtoRepository.save(produto.get());
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}/opiniao")
+    public ResponseEntity<?> criarOpiniao(@PathVariable Long id,
+                                          @RequestBody @Valid NovaOpiniaoRequest request,
+                                          @AuthenticationPrincipal Usuario usuario){
+        Optional<Produto> produto = produtoRepository.findById(id);
+        if (produto.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Produto não encontrado!");
+        }
+        if (produto.get().produtoPertenceUsuario(usuario)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O usuário dono do produto não pode opinar sobre o mesmo!");
+        }
+
+        Opiniao opiniao = request.toOpiniao(usuario,produto.get());
+        opiniaoRepository.save(opiniao);
 
         return ResponseEntity.ok().build();
     }
