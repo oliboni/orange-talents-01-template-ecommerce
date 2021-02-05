@@ -11,6 +11,11 @@ public class NovaAutenticacaoRequest {
     @NotBlank
     private String senha;
 
+    public NovaAutenticacaoRequest(@NotBlank String login, @NotBlank String senha) {
+        this.login = login;
+        this.senha = senha;
+    }
+
     public String getLogin() {
         return login;
     }

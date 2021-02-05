@@ -21,6 +21,10 @@ public class NovaCategoriaRequest {
         return idCategoriaMae;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public Categoria toCategoria(Categoria categoria){
         return new Categoria(nome,categoria);
     }
