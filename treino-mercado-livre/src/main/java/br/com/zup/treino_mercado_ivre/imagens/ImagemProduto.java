@@ -1,4 +1,4 @@
-package br.com.zup.treino_mercado_ivre.produto.imagens;
+package br.com.zup.treino_mercado_ivre.imagens;
 
 import br.com.zup.treino_mercado_ivre.produto.Produto;
 import org.hibernate.validator.constraints.URL;

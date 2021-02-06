@@ -1,4 +1,4 @@
-package br.com.zup.treino_mercado_ivre.produto.caracteristica;
+package br.com.zup.treino_mercado_ivre.caracteristica;
 
 import br.com.zup.treino_mercado_ivre.produto.Produto;
 
@@ -21,6 +21,10 @@ public class Caracteristica {
         this.nome = nome;
         this.valor = valor;
         this.produto = produto;
+    }
+    @Deprecated
+    public Caracteristica(){
+
     }
 
     public Long getId() {

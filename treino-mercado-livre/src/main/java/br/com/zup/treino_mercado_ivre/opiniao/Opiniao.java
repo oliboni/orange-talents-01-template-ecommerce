@@ -1,4 +1,4 @@
-package br.com.zup.treino_mercado_ivre.produto.opiniao;
+package br.com.zup.treino_mercado_ivre.opiniao;
 
 import br.com.zup.treino_mercado_ivre.produto.Produto;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;

@@ -1,4 +1,4 @@
-package br.com.zup.treino_mercado_ivre.produto.imagens;
+package br.com.zup.treino_mercado_ivre.imagens;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

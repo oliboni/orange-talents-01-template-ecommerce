@@ -1,4 +1,4 @@
-package br.com.zup.treino_mercado_ivre.produto.caracteristica;
+package br.com.zup.treino_mercado_ivre.caracteristica;
 
 import br.com.zup.treino_mercado_ivre.produto.Produto;
 

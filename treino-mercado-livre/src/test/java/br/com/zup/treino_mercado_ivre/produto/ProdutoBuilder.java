@@ -1,13 +1,11 @@
 package br.com.zup.treino_mercado_ivre.produto;
 
 import br.com.zup.treino_mercado_ivre.categoria.Categoria;
-import br.com.zup.treino_mercado_ivre.produto.caracteristica.NovaCaracteristicaRequest;
+import br.com.zup.treino_mercado_ivre.caracteristica.NovaCaracteristicaRequest;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ProdutoBuilder {

@@ -1,18 +1,15 @@
 package br.com.zup.treino_mercado_ivre.produto;
 
 import br.com.zup.treino_mercado_ivre.categoria.Categoria;
-import br.com.zup.treino_mercado_ivre.produto.caracteristica.NovaCaracteristicaRequest;
+import br.com.zup.treino_mercado_ivre.caracteristica.NovaCaracteristicaRequest;
 import br.com.zup.treino_mercado_ivre.usuario.SenhaLimpa;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
-import io.jsonwebtoken.lang.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Collection;

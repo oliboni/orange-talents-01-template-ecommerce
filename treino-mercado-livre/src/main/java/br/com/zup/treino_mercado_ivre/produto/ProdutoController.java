@@ -2,11 +2,11 @@ package br.com.zup.treino_mercado_ivre.produto;
 
 import br.com.zup.treino_mercado_ivre.categoria.Categoria;
 import br.com.zup.treino_mercado_ivre.categoria.CategoriaRepository;
-import br.com.zup.treino_mercado_ivre.produto.opiniao.NovaOpiniaoRequest;
-import br.com.zup.treino_mercado_ivre.produto.opiniao.Opiniao;
-import br.com.zup.treino_mercado_ivre.produto.opiniao.OpiniaoRepository;
-import br.com.zup.treino_mercado_ivre.produto.imagens.NovasImagensRequest;
-import br.com.zup.treino_mercado_ivre.produto.imagens.Uploader;
+import br.com.zup.treino_mercado_ivre.opiniao.NovaOpiniaoRequest;
+import br.com.zup.treino_mercado_ivre.opiniao.Opiniao;
+import br.com.zup.treino_mercado_ivre.opiniao.OpiniaoRepository;
+import br.com.zup.treino_mercado_ivre.imagens.NovasImagensRequest;
+import br.com.zup.treino_mercado_ivre.imagens.Uploader;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 import br.com.zup.treino_mercado_ivre.validators.ProibeCaracteristicasComNomesIguaisValidator;
 import org.springframework.beans.factory.annotation.Autowired;

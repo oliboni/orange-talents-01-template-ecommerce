@@ -1,9 +1,9 @@
 package br.com.zup.treino_mercado_ivre.produto;
 
 import br.com.zup.treino_mercado_ivre.categoria.Categoria;
-import br.com.zup.treino_mercado_ivre.produto.caracteristica.Caracteristica;
-import br.com.zup.treino_mercado_ivre.produto.caracteristica.NovaCaracteristicaRequest;
-import br.com.zup.treino_mercado_ivre.produto.imagens.ImagemProduto;
+import br.com.zup.treino_mercado_ivre.caracteristica.Caracteristica;
+import br.com.zup.treino_mercado_ivre.caracteristica.NovaCaracteristicaRequest;
+import br.com.zup.treino_mercado_ivre.imagens.ImagemProduto;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 import org.springframework.util.Assert;
 

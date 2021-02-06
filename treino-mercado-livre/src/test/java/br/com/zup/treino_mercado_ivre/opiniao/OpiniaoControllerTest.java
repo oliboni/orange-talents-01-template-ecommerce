@@ -7,29 +7,23 @@ import br.com.zup.treino_mercado_ivre.categoria.CategoriaRepository;
 import br.com.zup.treino_mercado_ivre.produto.Produto;
 import br.com.zup.treino_mercado_ivre.produto.ProdutoBuilder;
 import br.com.zup.treino_mercado_ivre.produto.ProdutoRepository;
-import br.com.zup.treino_mercado_ivre.produto.caracteristica.NovaCaracteristicaRequest;
-import br.com.zup.treino_mercado_ivre.produto.opiniao.NovaOpiniaoRequest;
-import br.com.zup.treino_mercado_ivre.produto.opiniao.OpiniaoRepository;
+import br.com.zup.treino_mercado_ivre.caracteristica.NovaCaracteristicaRequest;
 import br.com.zup.treino_mercado_ivre.usuario.SenhaLimpa;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 import br.com.zup.treino_mercado_ivre.usuario.UsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
