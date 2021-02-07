@@ -4,6 +4,10 @@ import br.com.zup.treino_mercado_ivre.categoria.Categoria;
 import br.com.zup.treino_mercado_ivre.caracteristica.Caracteristica;
 import br.com.zup.treino_mercado_ivre.caracteristica.NovaCaracteristicaRequest;
 import br.com.zup.treino_mercado_ivre.imagens.ImagemProduto;
+import br.com.zup.treino_mercado_ivre.opiniao.NovaOpiniaoRequest;
+import br.com.zup.treino_mercado_ivre.opiniao.Opiniao;
+import br.com.zup.treino_mercado_ivre.perguntas.NovaPerguntaRequest;
+import br.com.zup.treino_mercado_ivre.perguntas.Pergunta;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 import org.springframework.util.Assert;
 
@@ -60,6 +64,12 @@ public class Produto {
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private Set<Opiniao> opinioes = new HashSet<>();
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private Set<Pergunta> perguntas = new HashSet<>();
 
     public Produto(@NotBlank String nome,
                    @NotNull @DecimalMin("1.0") BigDecimal valor,
@@ -121,6 +131,18 @@ public class Produto {
         return usuario;
     }
 
+    public Set<ImagemProduto> getImagens() {
+        return imagens;
+    }
+
+    public Set<Opiniao> getOpinioes() {
+        return opinioes;
+    }
+
+    public Set<Pergunta> getPerguntas() {
+        return perguntas;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -134,11 +156,14 @@ public class Produto {
         return Objects.hash(getNome());
     }
 
-    public void setImagens(Set<String> links) {
-        Set<ImagemProduto> imagens = links.stream()
-                                          .map(link -> new ImagemProduto(this,link))
-                                          .collect(Collectors.toSet());
-        this.imagens.addAll(imagens);
+    public void associaImagens(Set<String> links) {
+        this.imagens.addAll(links.stream().map(link -> new ImagemProduto(this,link)).collect(Collectors.toSet()));
+    }
+    public void associaOpiniao(NovaOpiniaoRequest request, Usuario usuario){
+        this.opinioes.add(request.toOpiniao(usuario,this));
+    }
+    public void associaPergunta(NovaPerguntaRequest request, Usuario usuario){
+        this.perguntas.add(request.toPergunta(usuario,this));
     }
 
     public boolean produtoPertenceUsuario(Usuario usuario) {

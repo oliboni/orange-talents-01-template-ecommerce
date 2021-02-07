@@ -12,18 +12,22 @@ import br.com.zup.treino_mercado_ivre.usuario.SenhaLimpa;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 import br.com.zup.treino_mercado_ivre.usuario.UsuarioRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -37,8 +41,6 @@ class OpiniaoControllerTest {
     @Autowired
     private ProdutoRepository produtoRepository;
     @Autowired
-    private OpiniaoRepository opiniaoRepository;
-    @Autowired
     MockMvc mockMvc;
     @Autowired
     ObjectMapper jsonMapper;
@@ -47,7 +49,32 @@ class OpiniaoControllerTest {
     @Autowired
     private AuthenticationManager authManager;
 
+    @Test
+    void deveCriarUmaOpiniao() throws Exception {
+        Produto produto = criaProduto(getUsuario("aa@gmail.com"));
+        Usuario usuarioOpiniao = getUsuario("email2@email.com");
+        NovaOpiniaoRequest novaOpiniao = new NovaOpiniaoRequest("Excelente","Decrição boa",5);
 
+        mockMvc.perform(post("/api/produtos/{id}/opiniao/",produto.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(novaOpiniao))
+                .header("Authorization", getToken("email2@email.com","123456")))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void naoDeveCriarUmaOpiniaoDoUsuarioQueEDono() throws Exception{
+        Produto produto = criaProduto(getUsuario("aa@gmail.com"));
+        NovaOpiniaoRequest novaOpiniao = new NovaOpiniaoRequest("Excelente","Decrição boa",5);
+
+        mockMvc.perform(post("/api/produtos/{id}/opiniao/",produto.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(novaOpiniao))
+                .header("Authorization", getToken("aa@gmail.com","123456")))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 
     private Categoria getCategoria(){
         Categoria categoria = new Categoria("Categoria 1",null);

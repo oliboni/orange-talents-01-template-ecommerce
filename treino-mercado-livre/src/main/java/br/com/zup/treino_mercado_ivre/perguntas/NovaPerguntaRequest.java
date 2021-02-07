@@ -4,6 +4,8 @@ import br.com.zup.treino_mercado_ivre.produto.Produto;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NovaPerguntaRequest {
     @NotBlank
@@ -26,4 +28,7 @@ public class NovaPerguntaRequest {
         return new Pergunta(titulo,usuario,produto);
     }
 
+    public Set<DetalhePerguntaDto> toResponse(Set<Pergunta> perguntas){
+        return perguntas.stream().map(DetalhePerguntaDto::new).collect(Collectors.toSet());
+    }
 }

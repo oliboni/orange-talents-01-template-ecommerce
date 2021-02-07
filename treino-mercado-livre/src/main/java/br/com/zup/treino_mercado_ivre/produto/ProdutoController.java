@@ -2,9 +2,6 @@ package br.com.zup.treino_mercado_ivre.produto;
 
 import br.com.zup.treino_mercado_ivre.categoria.Categoria;
 import br.com.zup.treino_mercado_ivre.categoria.CategoriaRepository;
-import br.com.zup.treino_mercado_ivre.opiniao.NovaOpiniaoRequest;
-import br.com.zup.treino_mercado_ivre.opiniao.Opiniao;
-import br.com.zup.treino_mercado_ivre.opiniao.OpiniaoRepository;
 import br.com.zup.treino_mercado_ivre.imagens.NovasImagensRequest;
 import br.com.zup.treino_mercado_ivre.imagens.Uploader;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
@@ -31,8 +28,6 @@ public class ProdutoController {
     private CategoriaRepository categoriaRepository;
     @Autowired
     private Uploader uploaderFake;
-    @Autowired
-    private OpiniaoRepository opiniaoRepository;
 
     @InitBinder(value = "novoProdutoRequest")
     public void init(WebDataBinder binder){
@@ -47,6 +42,16 @@ public class ProdutoController {
         produtoRepository.save(produto);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}")
+    public DetalheProdutoDto mostraDetalhe(@PathVariable("id") Long id){
+        Optional<Produto> produto = produtoRepository.findById(id);
+        if (produto.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado!");
+        }
+
+        return new DetalheProdutoDto(produto.get());
     }
 
     @PostMapping("/{id}/imagens")
@@ -70,27 +75,9 @@ public class ProdutoController {
 
 
         Set<String> links = uploaderFake.envia(request.getImagens());
-        produto.get().setImagens(links);
+        produto.get().associaImagens(links);
 
         produtoRepository.save(produto.get());
-
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/{id}/opiniao")
-    public ResponseEntity<?> criarOpiniao(@PathVariable Long id,
-                                          @RequestBody @Valid NovaOpiniaoRequest request,
-                                          @AuthenticationPrincipal Usuario usuario){
-        Optional<Produto> produto = produtoRepository.findById(id);
-        if (produto.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Produto não encontrado!");
-        }
-        if (produto.get().produtoPertenceUsuario(usuario)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O usuário dono do produto não pode opinar sobre o mesmo!");
-        }
-
-        Opiniao opiniao = request.toOpiniao(usuario,produto.get());
-        opiniaoRepository.save(opiniao);
 
         return ResponseEntity.ok().build();
     }

@@ -41,14 +41,14 @@ public class PerguntaController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O usuário dono do produto não pode incluir uma pergunta ao produto!");
         }
 
-        Pergunta pergunta = request.toPergunta(usuario,produto.get());
-        perguntaRepository.save(pergunta);
+        produto.get().associaPergunta(request,usuario);
+        produtoRepository.save(produto.get());
 
         String urlProduto = uriBuilder.path("/api/produtos/{id}").buildAndExpand(id).toString();
 
-        enviaEmail.sendEmail(pergunta, urlProduto);
+        enviaEmail.sendEmail(produto.get(), urlProduto, request.getTitulo(),usuario);
 
-        var listaPerguntas = perguntaRepository.findByProdutoId(id);
+        var listaPerguntas = request.toResponse(produto.get().getPerguntas());
 
         return ResponseEntity.ok(listaPerguntas);
     }
