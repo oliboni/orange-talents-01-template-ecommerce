@@ -10,6 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 public class Opiniao {
@@ -89,4 +90,16 @@ public class Opiniao {
         return produto;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Opiniao)) return false;
+        Opiniao opiniao = (Opiniao) o;
+        return Objects.equals(getTitulo(), opiniao.getTitulo()) && Objects.equals(getDescricao(), opiniao.getDescricao()) && Objects.equals(getUsuario(), opiniao.getUsuario()) && Objects.equals(getProduto(), opiniao.getProduto());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitulo(), getDescricao(), getUsuario(), getProduto());
+    }
 }

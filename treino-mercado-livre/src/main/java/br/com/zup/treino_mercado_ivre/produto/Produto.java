@@ -9,7 +9,9 @@ import br.com.zup.treino_mercado_ivre.opiniao.Opiniao;
 import br.com.zup.treino_mercado_ivre.perguntas.NovaPerguntaRequest;
 import br.com.zup.treino_mercado_ivre.perguntas.Pergunta;
 import br.com.zup.treino_mercado_ivre.usuario.Usuario;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -170,6 +172,16 @@ public class Produto {
         if (getUsuario().equals(usuario)){
             return true;
         }
+        return false;
+    }
+
+    public boolean atualizaEstoque(@Positive Integer quantidade) {
+        Assert.isTrue(quantidade > 0, "A quantidade deve ser maior que zero!");
+        if (getQuantidade() >= quantidade){
+            this.quantidade -= quantidade;
+            return true;
+        }
+
         return false;
     }
 }

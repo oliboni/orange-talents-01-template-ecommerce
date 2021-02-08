@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -40,5 +41,9 @@ public class EnviaEmail{
                 usuario.getUsername(),
                 "novaPergunta@ml.com",
                 produto.getUsuario().getUsername());
+    }
+
+    public void sendGenericEmail(@NotBlank String body, @NotBlank String subject, @NotBlank String nameFrom, @NotBlank @Email String from, @NotBlank @Email String to){
+        mailer.send(body,subject,nameFrom,from,to);
     }
 }

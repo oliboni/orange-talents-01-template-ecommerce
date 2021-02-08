@@ -86,12 +86,12 @@ public class DetalheProdutoDto {
         return opinioes.stream().map(DetalheOpiniaoDto::getNota).reduce(0, Integer::sum);
     }
 
-    public double getMediaNotas() {
+    public BigDecimal getMediaNotas() {
         if(opinioes.isEmpty()){
-            return 0;
+            return new BigDecimal("0");
         }
 
-        return getTotalNotas()/opinioes.size();
+        return new BigDecimal(getTotalNotas()/opinioes.size());
 
     }
 }
